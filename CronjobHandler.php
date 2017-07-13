@@ -6,6 +6,8 @@ class CronjobHandler
 	function __construct(array $cronjobs = [])
 	{
 	    $this->loadCronjobs($cronjobs);
+		
+		return $this;
 	}
 	
     protected function loadCronjobs(array $cronjobs = [])
@@ -30,6 +32,8 @@ class CronjobHandler
 		}
 		
 		$this->cronjobs[] = $cronjob;
+		
+		return $this;
 	}
 	
 	public function run()
