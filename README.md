@@ -7,7 +7,7 @@ class BackupCronjob extends Cronjob
 {
     function __construct()
     {
-        $this->minutes = [0];
+        $this->minutes = new CronjobTime(0, 59, [0]);
     }
     
     public function run()
