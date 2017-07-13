@@ -19,6 +19,8 @@ class CronjobTime
         foreach ($times as $time) {
             $this->add($time);
         }
+        
+        return $this;
     }
     
     public function add(int $time)
@@ -32,10 +34,14 @@ class CronjobTime
         }
         
         $this->times[] = $time;
+        
+        return $this;
     }
     
-    public function set(array $times)
+    public function set(array $times = [])
     {
         $this->times = $times;
+        
+        return $this;
     }
 }
