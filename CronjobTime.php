@@ -6,7 +6,7 @@ class CronjobTime
     
     protected $times = [];
     
-    function __construct(int $start, int $end, array $times = [])
+    function __construct(string $start, string $end, array $times = [])
     {
         if ($start < 0 || $end < 0) {
             throw new \InvalidArgumentException('Cannot handle a negative start or end value.');
@@ -23,7 +23,7 @@ class CronjobTime
         return $this;
     }
     
-    public function add(int $time)
+    public function add(string $time)
     {
         if ($time < $start) {
             throw new \InvalidArgumentException('Cannot handle an input, which is smaller than start (' . $this->start . ')');
@@ -43,5 +43,10 @@ class CronjobTime
         $this->times = $times;
         
         return $this;
+    }
+    
+    public function isPresent(string $time)
+    {
+        return in_array($time, $this->times);
     }
 }
