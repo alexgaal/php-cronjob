@@ -44,7 +44,7 @@ abstract class Cronjob
         }
         
         foreach ($this->yearFormats as $yearFormat) {
-            if ($this->isCurrent($today->format($yearFormat), $this->years)) {
+            if ($this->isPresent($today->format($yearFormat), $this->years)) {
                 return true;
             }
         }
@@ -59,7 +59,7 @@ abstract class Cronjob
         }
         
         foreach ($this->monthFormats as $monthFormat) {
-            if ($this->isCurrent($today->format($monthFormat), $this->months)) {
+            if ($this->isPresent($today->format($monthFormat), $this->months)) {
                 return true;
             }
         }
@@ -74,7 +74,7 @@ abstract class Cronjob
         }
         
         foreach ($this->dayFormats as $dayFormat) {
-            if ($this->isCurrent($today->format($dayFormat), $this->days)) {
+            if ($this->isPresent($today->format($dayFormat), $this->days)) {
                 return true;
             }
         }
@@ -89,7 +89,7 @@ abstract class Cronjob
         }
         
         foreach ($this->hourFormats as $hourFormat) {
-            if ($this->isCurrent($today->format($hourFormat), $this->hours)) {
+            if ($this->isPresent($today->format($hourFormat), $this->hours)) {
                 return true;
             }
         }
@@ -104,7 +104,7 @@ abstract class Cronjob
         }
         
         foreach ($this->minuteFormats as $minuteFormat) {
-            if ($this->isCurrent($today->format($minuteFormat), $this->minutes)) {
+            if ($this->isPresent($today->format($minuteFormat), $this->minutes)) {
                 return true;
             }
         }
@@ -123,7 +123,7 @@ abstract class Cronjob
                 foreach ($this->dayFormats as $dayFormat) {
                     foreach ($this->hourFormats as $hourFormat) {
                         foreach ($this->minuteFormats as $minuteFormat) {
-                            if ($this->isCurrent($today->format($yearFormat . '-' . $monthFormat . '-' . $dayFormat . ' ' . $hourFormat . ':' . $minuteFormat), $this->specific)) {
+                            if ($this->isPresent($today->format($yearFormat . '-' . $monthFormat . '-' . $dayFormat . ' ' . $hourFormat . ':' . $minuteFormat), $this->specific)) {
                                 return true;
                             }
                         }
@@ -135,33 +135,55 @@ abstract class Cronjob
         return false;
     }
     
-    protected function isCurrent(string $date, array $dates) {
-        return  in_array('*', $dates) || in_array($date, $dates);
+    protected function isPresent(string $dateString, array $dates) {
+        foreach ($dates as $date) {
+            if ('*' === $date) {
+                return true;   
+            }
+            
+            if ($date instanceof CronjobTime) {
+                if ($date->isPresent($dateString)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
     }
     
     public function year(int $interval)
     {
         $this->years = $this->interval(2017, 3000, $interval);
+        
+        return $this;
     }
     
     public function month(int $interval)
     {
         $this->months = $this->interval(1, 12, $interval);
+        
+        return $this;
     }
     
     public function days(int $interval)
     {
         $this->days = $this->interval(1, 31, $interval);
+        
+        return $this;
     }
     
     public function hours(int $interval)
     {
         $this->hours = $this->interval(0, 23, $interval);
+        
+        return $this;
     }
     
     public function minutes(int $interval)
     {
         $this->minutes = $this->interval(0, 59, $interval);
+        
+        return $this;
     }
     
     protected function interval(int $start, int $end, int $interval = 1): array
