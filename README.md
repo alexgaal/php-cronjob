@@ -23,7 +23,8 @@ $cronjobs = [
     new BackupCronjob()
 ];
 
-$cronjobHandler = new CronjobHandler($cronjobs)->run();
+$cronjobHandlerStaticFromArray = CronjobHandler::fromArray($cronjobs)->run();
+$cronjobHandlerFromArray = new CronjobHandler($cronjobs)->run();
 
 // 2017-07-13 08:24 -> $cronjob->now() would return false
 ```
