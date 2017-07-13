@@ -3,6 +3,14 @@ class CronjobHandler
 {
     protected $cronjobs = [];
 	
+	public static function fromArray(array $cronjobs) {
+		return new CronjobHandler($cronjobs);	
+	}
+	
+	public static function fromDirectory(string $directory) {
+		//return new CronjobHandler($directory);	
+	}
+	
 	function __construct(array $cronjobs = [])
 	{
 	    $this->loadCronjobs($cronjobs);
