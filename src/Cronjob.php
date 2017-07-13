@@ -62,7 +62,7 @@ class Cronjob
     {
         $task = $this->getTask();
 
-        if(!$task->test()) { return false; }
+        if(!$task->test()) { return null; }
         if(!$task->boot()) { throw new TaskBootException(); }
         if(!$task->run()) {
             if(!$task->reverse()) { throw new TaskReverseException(); }

@@ -93,7 +93,7 @@ class CronjobTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(true, $this->cron->run());
 
         $this->setCronjob(true, false);
-        $this->assertFalse($this->cron->run());
+        $this->assertNull($this->cron->run());
 
         $this->setCronjob(true, true, true, true, true);
         $this->assertTrue($this->cron->run());
