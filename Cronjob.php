@@ -7,16 +7,22 @@ abstract class Cronjob
     protected $hourFormats = ['H', 'G'];
     protected $minuteFormats = ['i'];
 
-    protected $years = ['*'];
-    protected $months = ['*'];
-    protected $days = ['*'];
+    protected $years;;
+    protected $months;
+    protected $days;
     
-    protected $hours = ['*'];
-    protected $minutes = ['*'];
+    protected $hours;
+    protected $minutes;
     
-    protected $specific = [];
+    protected $specific;
     
-    function __construct() {}
+    function __construct() {
+        $this->years = ['*'];
+        $this->months = ['*'];
+        $this->days = ['*'];
+        $this->hours = ['*'];
+        $this->minutes = ['*'];
+    }
     
     public function now()
     {
@@ -130,7 +136,7 @@ abstract class Cronjob
     }
     
     protected function isCurrent(string $date, array $dates) {
-        return in_array($date, $dates);
+        return  in_array('*', $dates) || in_array($date, $dates);
     }
     
     public function year(int $interval)
