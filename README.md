@@ -1,1 +1,29 @@
 # php-cronjob
+
+## Example
+```php
+<?php
+class BackupCronjob extends Cronjob
+{
+    function __construct()
+    {
+        $this->minutes = [0];
+    }
+    
+    public function run()
+    {
+        // do some database backup
+    }
+}
+```
+
+```php
+<?php
+$cronjobs = [
+    new BackupCronjob()
+];
+
+$cronjobHandler = new CronjobHandler($cronjobs)->run();
+
+// 2017-07-13 08:24 -> $cronjob->now() would return false
+```
